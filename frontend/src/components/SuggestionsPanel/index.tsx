@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react";
-import type { Decision, Evaluation, OnDecisionOpts, Suggestion } from "../../types";
+import type {
+  Decision,
+  Evaluation,
+  OnDecisionOpts,
+  Suggestion,
+} from "../../types";
 import { EvaluationBlock } from "../EvaluationBlock";
 import { SuggestionCard } from "../SuggestionCard";
 
@@ -36,15 +41,17 @@ export default function SuggestionsPanel({
         return;
       }
 
-      e.preventDefault();
-
       if (e.key === "ArrowDown") {
+        e.preventDefault();
         onFocusChange(Math.min(focusedIndex + 1, suggestions.length - 1));
       } else if (e.key === "ArrowUp") {
+        e.preventDefault();
         onFocusChange(Math.max(focusedIndex - 1, 0));
       } else if (e.key === "Enter") {
+        e.preventDefault();
         onDecision({ sid: suggestions[focusedIndex].sid, decision: "approve" });
       } else if (e.key === "Escape") {
+        e.preventDefault();
         onDecision({ sid: suggestions[focusedIndex].sid, decision: "reject" });
       }
     };
