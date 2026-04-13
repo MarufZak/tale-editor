@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+    --color-accent: #6366f1;
+    --color-accent-hover: #4f46e5;
+}
+
+@layer base {
+    html {
+        font-family:
+            system-ui,
+            -apple-system,
+            sans-serif;
+        color: theme(--color-gray-700);
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    #root {
+        width: 100%;
+        max-width: 720px;
+    }
+
+    button {
+        font: inherit;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-weight: 500;
+        transition: background-color 0.15s;
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+@utility spinner-border {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 2px solid theme(--color-gray-200);
+    border-top-color: theme(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
