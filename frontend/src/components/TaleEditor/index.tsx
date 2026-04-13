@@ -2,6 +2,7 @@ import { useCallback, useReducer } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 import type { OnDecisionOpts } from "../../types";
 import { fetchSuggestions, applyDecisions } from "../../lib/api";
+import { wait } from "../../lib/wait";
 import SuggestionsPanel from "../SuggestionsPanel";
 import { FooterActions } from "../FooterActions";
 import { CharCounter } from "./CharCounter";
@@ -40,7 +41,10 @@ export function TaleEditor({ onSubmit }: Props) {
     dispatch({ type: "START_SUGGEST" });
 
     try {
-      const data = await fetchSuggestions(taleText);
+      const [data] = await Promise.all([
+        fetchSuggestions(taleText),
+        wait(1000),
+      ]);
       dispatch({ type: "SUGGEST_SUCCESS", data });
     } catch (err) {
       dispatch({
@@ -60,10 +64,10 @@ export function TaleEditor({ onSubmit }: Props) {
         original: s.original,
         proposed: s.proposed,
       }));
-      const data = await applyDecisions({
-        text: taleText,
-        decisions: applyList,
-      });
+      const [data] = await Promise.all([
+        applyDecisions({ text: taleText, decisions: applyList }),
+        wait(1000),
+      ]);
       dispatch({ type: "APPLY_SUCCESS", text: data.text });
     } catch (err) {
       dispatch({
