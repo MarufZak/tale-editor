@@ -30,7 +30,9 @@ def suggest(req: SuggestRequest):
 
 @app.post("/api/apply", response_model=ApplyResponse)
 def apply(req: ApplyRequest):
-    decisions_dicts = [d.model_dump() for d in req.decisions]
+    decisions_dicts = []
+    for d in req.decisions:
+        decisions_dicts.append(d.model_dump())
     result = apply_decisions(req.text, decisions_dicts)
     return ApplyResponse(text=result)
 
